@@ -27,7 +27,7 @@ public class Chess {
             {"EE", "EE", "EE", "EE", "EE", "EE", "EE", "EE"},
             {"EE", "EE", "EE", "EE", "EE", "EE", "EE", "EE"},
             {"EE", "EE", "EE", "EE", "EE", "EE", "EE", "EE"},
-            {"bP", "wP", "bP", "bP", "bP", "bP", "bP", "bP"},
+            {"bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"},
             {"bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"}};
 
     public Chess() {
@@ -112,7 +112,7 @@ public class Chess {
         return sum;
     }
 
-    public void print() {
+    public String print() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n  A  B  C  D  E  F  G  H   \n");
         for (int i = 7; i >= 0; i--) {
@@ -133,7 +133,7 @@ public class Chess {
             sb.append(i + 1).append(" \n");
         }
         sb.append("  A  B  C  D  E  F  G  H   \n");
-        System.out.println(sb);
+        return sb.toString();
     }
 
     public String move(String move) {
@@ -143,12 +143,12 @@ public class Chess {
         int x2 = move.charAt(3) - 'a';
         int y2 = move.charAt(4) - '1';
 
-        for (int i = 7; i >= 0; i--) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(opponentMoves[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        for (int i = 7; i >= 0; i--) {
+//            for (int j = 0; j < 8; j++) {
+//                System.out.print(opponentMoves[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
 
         if (sumMask(allyMoves) == 0 || end) {
             String cause;
@@ -169,7 +169,7 @@ public class Chess {
         Piece piece = getPieceAt(x1, y1);
         if (piece == null) return "THERE IS NO PIECE ON THAT TILE";
         if (piece.color != turn) return "THE TURN IS AT THE OTHER SIDE";
-        piece.printMoves();
+//        piece.printMoves();
         if (piece.availableMoves[y2][x2] == 0) return "WRONG MOVE";
 
         if (piece.type == Type.PAWN) {

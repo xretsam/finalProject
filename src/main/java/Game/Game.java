@@ -8,7 +8,7 @@ public class Game {
         Chess chess = new Chess();
         Scanner scan = new Scanner(System.in);
         while (!chess.end) {
-            chess.print();
+            System.out.println(chess.print());
             System.out.print("WRITE YOUR MOVE: ");
             chess.move(scan.nextLine());
         }
