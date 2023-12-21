@@ -1,7 +1,6 @@
 package Server;
 
 import Game.Chess;
-import Game.JsonAdapter;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -33,7 +32,7 @@ public class GameSession implements Runnable{
         turn = r < 0.5;
         out1.writeUTF(turn ? "white" : "black");
         out2.writeUTF(turn ? "black" : "white");
-        JsonAdapter jsonAdapter = game.getJsonAdapter();
+        JsonGame jsonAdapter = new JsonAdapter(game);
         do {
             out1.writeUTF(jsonAdapter.getJsonAsString());
             out2.writeUTF(jsonAdapter.getJsonAsString());

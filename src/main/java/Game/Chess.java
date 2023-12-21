@@ -226,7 +226,7 @@ public class Chess {
     public String getTurn() {
         return turn == Color.WHITE? "white" : "black";
     }
-    public JsonAdapter getJsonAdapter() {
-        return new JsonAdapter(this);
-    }
+//    public JsonAdapter getJsonAdapter() {
+//        return new JsonAdapter(this);
+//    }
 }

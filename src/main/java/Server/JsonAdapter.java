@@ -1,13 +1,14 @@
-package Game;
+package Server;
 
+import Game.Chess;
 import Game.Pieces.Piece;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class JsonAdapter {
-    private Chess game;
+public class JsonAdapter implements JsonGame{
+    private final Chess game;
 
     public JsonAdapter(Chess game) {
         this.game = game;
@@ -42,10 +43,5 @@ public class JsonAdapter {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        JsonAdapter jsonAdapter = new JsonAdapter(new Chess());
-        System.out.println(jsonAdapter.getJsonAsString());
     }
 }
