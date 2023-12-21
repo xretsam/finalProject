@@ -1,0 +1,9 @@
+.light-cell {
+    -fx-background-color: #f0d9b5; /* Light color */
+    /*-fx-background-color: #eeeeee; /* */
+}
+
+.dark-cell {
+    -fx-background-color: #b58863; /* Dark color */
+    /*-fx-background-color: #5a5a5a; /* */
+}

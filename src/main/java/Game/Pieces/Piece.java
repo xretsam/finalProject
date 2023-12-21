@@ -66,4 +66,21 @@ public abstract class Piece {
         sb.append("  A B C D E F G H   \n");
         System.out.println(sb);
     }
+    public String getType(){
+        return switch (type) {
+            case PAWN -> "pawn";
+            case ROOK -> "rook";
+            case KNIGHT -> "knight";
+            case BISHOP -> "bishop";
+            case QUEEN -> "queen";
+            case KING -> "king";
+        };
+    }
+
+    public String getColor(){
+        return switch(color) {
+            case WHITE -> "white";
+            case BLACK -> "black";
+        };
+    }
 }

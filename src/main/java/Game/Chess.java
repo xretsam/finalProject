@@ -150,7 +150,7 @@ public class Chess {
 //            System.out.println();
 //        }
 
-        if (sumMask(allyMoves) == 0 || end) {
+        if (sumMask(allyMoves) == 0 || end) { //TODO move it to the end
             String cause;
             String win;
             if (turn == Color.WHITE) {
@@ -216,5 +216,12 @@ public class Chess {
         if (turn == Color.WHITE) moveCount++;
         evaluateMoves();
         return move;
+    }
+
+    public String getTurn() {
+        return turn == Color.WHITE? "white" : "black";
+    }
+    public JsonAdapter getJsonAdapter() {
+        return new JsonAdapter(this);
     }
 }
