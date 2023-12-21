@@ -1,7 +1,10 @@
 package Client.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.*;
 
 import java.io.IOException;
@@ -19,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -45,6 +49,21 @@ public class GameController {
     @FXML
     private Pane boardContainer;
 
+    @FXML
+    private Label endCause;
+
+    @FXML
+    private AnchorPane endGameMenu;
+
+    @FXML
+    private Button okBTmenu;
+
+    @FXML
+    private Button returnBT;
+
+    @FXML
+    private Button returnBTmenu;
+
     private Client client;
 
     private Thread clientThread;
@@ -66,24 +85,24 @@ public class GameController {
 
     StackPane chosenTile;
     private void onTileMousePressed(MouseEvent mouseEvent) {
-        System.out.println("MousePressed");
+//        System.out.println("MousePressed");
         StackPane tile = (StackPane) mouseEvent.getSource();
         if(!tile.getChildren().isEmpty()){
             if(tile.getUserData() != null) {
-                Platform.runLater(() ->{
-                    tile.getChildren().clear();
-                    tile.getChildren().addAll(chosenTile.getChildren());
-                });
                 Integer x1 = GridPane.getColumnIndex(chosenTile);
                 Integer y1 = GridPane.getRowIndex(chosenTile);
                 Integer x2 = GridPane.getColumnIndex(tile);
                 Integer y2 = GridPane.getRowIndex(tile);
+                Piece[][] pieces = boardModel.getPieces();
                 if(x1 == null) x1 = 0;
                 if(x2 == null) x2 = 0;
                 if(y1 == null) y1 = 0;
                 if(y2 == null) y2 = 0;
+                pieces[7 - y2][x2] = pieces[7 - y1][x1];
+                pieces[7 - y1][x1] = null;
                 String move = ((char) ('a' + x1)) + "" + (8 - y1) + " " + ((char) ('a' + x2)) + "" + (8 - y2) + "\n";
                 try {
+                    drawBoard();
                     clientOutput.write(move.getBytes());
                     System.out.println("sent move" + move);
                 } catch (IOException e) {
@@ -130,7 +149,7 @@ public class GameController {
     }
 
     private void onTileMouseReleased(MouseEvent mouseEvent) {
-        System.out.println("mouse released");
+//        System.out.println("mouse released");
         StackPane tile = (StackPane) mouseEvent.getSource();
         if (chosenTile == null) return;
         if(!chosenTile.getChildren().isEmpty()) {
@@ -186,6 +205,20 @@ public class GameController {
         });
         dragEvent.setDropCompleted(true);
         dragEvent.consume();
+    }
+
+    @FXML
+    private void onReturnBTAction(ActionEvent actionEvent) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Mainmenu.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            MainMenuController controller = fxmlLoader.getController();
+            controller.setStage(stage);
     }
 
     @FXML
@@ -346,6 +379,12 @@ public class GameController {
         return currentBoardView;
     }
 
+    public void setEndGame(){
+        Platform.runLater(() -> {
+            endCause.setText(boardModel.getCause());
+            endGameMenu.setVisible(true);
+        });
+    }
 
     public void setBoardModel(Board boardModel) {
         this.boardModel = boardModel;

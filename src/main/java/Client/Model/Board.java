@@ -6,6 +6,10 @@ public class Board {
 
     private String color;
 
+    private boolean end;
+
+    private String cause;
+
     public void setColor(String color) {
         this.color = color;
     }
@@ -14,6 +18,19 @@ public class Board {
         return color;
     }
 
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
+    }
+    public String getCause() {
+        return cause;
+    }
     public Board() {
         pieces = new Piece[8][8];
     }

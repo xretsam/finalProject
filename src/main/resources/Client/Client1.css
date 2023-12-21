@@ -7,3 +7,11 @@
     -fx-background-color: #b58863; /* Dark color */
     /*-fx-background-color: #5a5a5a; /* */
 }
+.dark-anchorPane {
+    -fx-background-color: #3f3a3a;
+}
+.endCause {
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-font-size: 25pt;
+}

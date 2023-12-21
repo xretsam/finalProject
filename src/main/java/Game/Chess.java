@@ -20,6 +20,8 @@ public class Chess {
 
     public boolean end = false;
 
+    public String cause = "";
+
     static final private String[][] template = {
             {"wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"},
             {"wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"},
@@ -137,6 +139,9 @@ public class Chess {
     }
 
     public String move(String move) {
+        if(end) {
+            return cause;
+        }
         if (move.length() < 4) return "INVALID MOVE";
         int x1 = move.charAt(0) - 'a';
         int y1 = move.charAt(1) - '1';
@@ -150,21 +155,7 @@ public class Chess {
 //            System.out.println();
 //        }
 
-        if (sumMask(allyMoves) == 0 || end) { //TODO move it to the end
-            String cause;
-            String win;
-            if (turn == Color.WHITE) {
-                win = "BLACKS";
-                if (opponentMoves[whiteKing.y][whiteKing.x] != 0) cause = "CHECK AND MATE";
-                else cause = "STALEMATE";
-            } else {
-                win = "WHITES";
-                if (opponentMoves[blackKing.y][blackKing.x] != 0) cause = "CHECK AND MATE";
-                else cause = "STALEMATE";
-            }
-            end = true;
-            return win + " WIN WITH " + cause;
-        }
+
 
         Piece piece = getPieceAt(x1, y1);
         if (piece == null) return "THERE IS NO PIECE ON THAT TILE";
@@ -215,6 +206,20 @@ public class Chess {
         turn = turn == Color.WHITE ? Color.BLACK : Color.WHITE;
         if (turn == Color.WHITE) moveCount++;
         evaluateMoves();
+        if (sumMask(allyMoves) == 0) {
+            end = true;
+            String win;
+            if (turn == Color.WHITE) {
+                win = "BLACKS";
+                if (opponentMoves[whiteKing.y][whiteKing.x] != 0) cause = "CHECK AND MATE";
+                else cause = "STALEMATE";
+            } else {
+                win = "WHITES";
+                if (opponentMoves[blackKing.y][blackKing.x] != 0) cause = "CHECK AND MATE";
+                else cause = "STALEMATE";
+            }
+            cause = win + " WIN BY " + cause;
+        }
         return move;
     }
 

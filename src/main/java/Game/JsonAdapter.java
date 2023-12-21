@@ -16,6 +16,8 @@ public class JsonAdapter {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode json = objectMapper.createObjectNode();
         json.put("currentTurn", game.getTurn());
+        json.put("end", game.end);
+        json.put("cause", game.cause);
         ArrayNode pieces = json.putArray("pieces");
         for (Piece[] pieceList : game.board){
             for (Piece piece : pieceList) {

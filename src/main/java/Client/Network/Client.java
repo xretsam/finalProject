@@ -11,42 +11,17 @@ import java.net.SocketException;
 import java.util.Scanner;
 
 public class Client implements Runnable{
-    private Socket server;
-    private DataInputStream inp;
-    private DataOutputStream out;
-    private Scanner scanner;
+    protected Socket server;
+    protected DataInputStream inp;
+    protected DataOutputStream out;
+    protected Scanner scanner;
 
-    private GameController controller;
+    protected GameController controller;
 
     public Client(String address, int port) throws IOException {
         server = new Socket(address, port);
         inp = new DataInputStream(server.getInputStream());
         out = new DataOutputStream(server.getOutputStream());
-        scanner = new Scanner(System.in);
-    }
-    public Client(InetAddress address, int port) throws IOException {
-        server = new Socket(address, port);
-        inp = new DataInputStream(server.getInputStream());
-        out = new DataOutputStream(server.getOutputStream());
-        scanner = new Scanner(System.in);
-    }
-
-    public void start() throws IOException{
-        System.out.println(inp.readUTF());
-        try {
-            while(true){
-                String response = inp.readUTF();
-                Board board = JsonParser.parse(response);
-                System.out.println(response);
-                response = inp.readUTF();
-                if(response.equals("END")) break;
-                do {
-                    out.writeUTF(scanner.nextLine());
-                } while (!inp.readUTF().equals("OK"));
-            }
-        } catch (SocketException socketException){
-            server.close();
-        }
     }
 
     @Override
@@ -57,12 +32,12 @@ public class Client implements Runnable{
             System.out.println(color);
             while(true){
                 String response = inp.readUTF();
-                if(response.equals("END")) break;
                 Board board = JsonParser.parse(response);
                 board.setColor(color);
 //                System.out.println(response); //TODO: act accordingly the turn
                 controller.setBoardModel(board);
                 controller.drawBoard();
+                if(board.isEnd()) break;
                 //if currentTurn = turn getMove else readUTF
                 if(color.equals(board.getCurrentTurn())) {
                     do {
@@ -73,6 +48,8 @@ public class Client implements Runnable{
                     } while (!inp.readUTF().equals("OK"));
                 }
             }
+            System.out.println("Client acquired end");
+            controller.setEndGame();
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);

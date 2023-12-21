@@ -12,6 +12,8 @@ public class Game {
             System.out.print("WRITE YOUR MOVE: ");
             chess.move(scan.nextLine());
         }
+        System.out.println(chess.print());
+        System.out.println(chess.move(""));
     }
 
 }

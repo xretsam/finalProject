@@ -12,7 +12,10 @@ public class JsonParser {
             JsonNode jsonNode = objectMapper.readTree(jsonString);
             ArrayNode pieces = (ArrayNode) jsonNode.get("pieces");
             JsonNode currentTurn = jsonNode.get("currentTurn");
+            JsonNode end = jsonNode.get("end");
             board.setCurrentTurn(currentTurn.asText());
+            board.setEnd(end.asBoolean());
+            board.setCause(jsonNode.get("cause").asText());
             for(JsonNode jsonPiece : pieces){
                 Piece piece = objectMapper.readValue(jsonPiece.toString(), Piece.class);
                 board.setPiece(piece);

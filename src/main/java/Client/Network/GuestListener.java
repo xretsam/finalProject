@@ -14,7 +14,6 @@ public class GuestListener implements Runnable{
     public String getMessage(String key){
         return hosts.get(key);
     }
-
     @Override
     public void run() {
         final int port = 4524;
@@ -28,7 +27,11 @@ public class GuestListener implements Runnable{
                 String message = new String(packet.getData(), 0, packet.getLength());
                 InetAddress senderAddress = packet.getAddress();
                 int senderPort = packet.getPort();
-                hosts.put(senderAddress.getHostAddress() + ":" + senderPort, message);
+                if(message.equals("DISCONNECT")) {
+                    hosts.remove(senderAddress.getHostAddress() + ":" + senderPort);
+                    System.out.println("removed host");
+                }
+                else hosts.put(senderAddress.getHostAddress() + ":" + senderPort, message);
 //                System.out.println("Received broadcast message from " + senderAddress + ":" + senderPort + ": " + message);
                 //TODO : removal of dead hosts
             }

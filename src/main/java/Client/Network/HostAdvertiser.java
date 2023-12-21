@@ -68,6 +68,14 @@ public class HostAdvertiser implements Runnable {
                 Thread.sleep(interval);
             }
         } catch (InterruptedException | IOException e) {
+            byte[] buffer = "DISCONNECT".getBytes();
+            for (InetAddress broadcast : broadcasts) {
+                try {
+                    UDPSocket.send(new DatagramPacket(buffer, buffer.length, broadcast, broadcastPort));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             System.out.println("Interrupted");
         }
     }

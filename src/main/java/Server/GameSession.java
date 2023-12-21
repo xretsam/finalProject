@@ -26,7 +26,7 @@ public class GameSession implements Runnable{
     }
 
     public void start() throws IOException {
-
+        System.out.println("session start");
         boolean turn;
         Random random = new Random();
         double r = random.nextDouble();
@@ -34,7 +34,7 @@ public class GameSession implements Runnable{
         out1.writeUTF(turn ? "white" : "black");
         out2.writeUTF(turn ? "black" : "white");
         JsonAdapter jsonAdapter = game.getJsonAdapter();
-        while (!game.end) {
+        do {
             out1.writeUTF(jsonAdapter.getJsonAsString());
             out2.writeUTF(jsonAdapter.getJsonAsString());
 //            out1.writeUTF(game.print());
@@ -42,7 +42,9 @@ public class GameSession implements Runnable{
             if(turn){
                 while(true){
                     String move = inp1.readUTF();
+                    System.out.println("move " + move);
                     if(game.move(move).equals(move)){
+                        System.out.println("inp1");
                         out1.writeUTF("OK");
                         break;
                     }
@@ -50,16 +52,20 @@ public class GameSession implements Runnable{
             }else{
                 while(true){
                     String move = inp2.readUTF();
+                    System.out.println("move " + move);
                     if(game.move(move).equals(move)) {
+                        System.out.println("inp2");
                         out2.writeUTF("OK");
                         break;
                     }
                 }
             }
             turn = !turn;
-        }
-        out1.writeUTF("END");
-        out2.writeUTF("END");
+        } while (!game.end);
+        out1.writeUTF(jsonAdapter.getJsonAsString());
+        out2.writeUTF(jsonAdapter.getJsonAsString());
+        System.out.println("session end");
+
     }
 
     public int getPort(){
