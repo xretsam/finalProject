@@ -300,7 +300,6 @@ public class GameController {
     }
 
     public void drawMoves(StackPane tile){
-//        System.out.println("drawingMoves");
         try {
             drawBoard();
         } catch (IOException e) {
@@ -322,15 +321,12 @@ public class GameController {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if(availableMoves[i * 8 + j] != 0) {
-//                    System.out.println("Mark at " + i + " " + j);
                     Circle mark = new Circle(tile.getWidth()/6, Color.web("#888888", 0.6));
                     StackPane markedTile = getTileByIndex(j, 7 - i, currentBoardView);
                     Platform.runLater(() -> {
                         markedTile.getChildren().add(mark);
                         markedTile.setUserData("marked");
                     });
-//                    System.out.println(i + " " + j);
-//                    System.out.println(GridPane.getRowIndex(markedTile) + " " + GridPane.getColumnIndex(markedTile));
                 }
             }
         }

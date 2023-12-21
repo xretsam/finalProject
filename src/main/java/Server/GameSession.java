@@ -90,19 +90,5 @@ public class GameSession implements Runnable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        try {
-//                p1 = serverSocket.accept();
-//                inp1 = new DataInputStream(p1.getInputStream());
-//                out1 = new DataOutputStream(p1.getOutputStream());
-//                System.out.println("p1");
-//
-//                p2 = serverSocket.accept();
-//                inp2 = new DataInputStream(p2.getInputStream());
-//                out2 = new DataOutputStream(p2.getOutputStream());
-//                System.out.println("p2");
-//                this.start();
-//        } catch (IOException e){
-//            throw new RuntimeException(e);
-//        }
     }
 }

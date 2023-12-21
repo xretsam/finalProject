@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Client.Network.Client;
-import Client.Network.Guest;
 import Client.Network.HostAdvertiser;
 import Server.GameSession;
 import javafx.event.ActionEvent;
