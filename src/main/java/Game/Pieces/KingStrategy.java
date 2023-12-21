@@ -4,22 +4,20 @@ import Game.Chess;
 import Game.Color;
 import Game.Type;
 
-public class King extends Piece {
-    public King(Color color, Chess chess, int x, int y) {
-        type = Type.KING;
-        this.color = color;
-        this.chess = chess;
-        this.x = x;
-        this.y = y;
-    }
-
+public class KingStrategy implements PieceStrategy{
+    Piece piece;
     @Override
-    public void evaluateMoves() {
-        clear();
+    public void evaluateMoves(Piece piece) {
+        this.piece = piece;
+        piece.clear();
+        Color color = piece.color;
+        int x = piece.x;
+        int y = piece.y;
+        Chess chess = piece.chess;
         for (int i = y - 1; i <= y + 1; i++) {
             for (int j = x - 1; j <= x + 1; j++) {
                 if(i == y && j == x) continue;
-                addMove(j, i);
+                piece.addMove(j, i);
             }
         }
         if (chess.turn != color) return;
@@ -27,7 +25,7 @@ public class King extends Piece {
         for (int i = y - 1; i <= y + 1; i++) {
             for (int j = x - 1; j <= x + 1; j++) {
                 if (i > 7 || i < 0 || j > 7 || j < 0) continue;
-                if (chess.opponentMoves[i][j] != 0) availableMoves[i][j] = 0;
+                if (chess.opponentMoves[i][j] != 0) piece.availableMoves[i][j] = 0;
             }
         }
 
@@ -55,13 +53,16 @@ public class King extends Piece {
     }
 
     private void checkCastling(int dx){
-        if (moveCount == 0) {
+        int x = piece.x;
+        int y = piece.y;
+        Chess chess = piece.chess;
+        if (piece.moveCount == 0) {
             for (int j = x + dx; j < 8 && j >= 0; j += dx) {
                 if (chess.opponentMoves[y][j] != 0) break;
                 Piece piece = chess.getPieceAt(j, y);
                 if (piece != null) {
                     if (piece.type == Type.ROOK && piece.moveCount == 0) {
-                        addMove(x + 2 * dx, y);
+                        piece.addMove(x + 2 * dx, y);
                     }
                     break;
                 }
@@ -77,6 +78,8 @@ public class King extends Piece {
     }
 
     private void checkLine(Type[] types, int x, int y, int dx, int dy) {
+        Color color = piece.color;
+        Chess chess = piece.chess;
         Piece defender = null;
         boolean[][] mask = new boolean[8][8];
         for (int i = y + dy, j = x + dx; i < 8 && i >= 0 && j < 8 && j >= 0; i += dy, j += dx) {
@@ -91,7 +94,7 @@ public class King extends Piece {
                             if (defender == null) {
                                 for (int k = 0; k < 8; k++) {
                                     for (int l = 0; l < 8; l++) {
-                                        if (!isOpponentPiece(l, k) && !isTileFree(l, k))
+                                        if (!piece.isOpponentPiece(l, k) && !piece.isTileFree(l, k))
                                             applyMask(mask, chess.getPieceAt(l, k));
                                     }
                                 }
@@ -105,6 +108,8 @@ public class King extends Piece {
     }
 
     private void checkTile(Type type, int x, int y) {
+        Color color = piece.color;
+        Chess chess = piece.chess;
         Piece piece = chess.getPieceAt(x, y);
         if (piece != null) {
             if (piece.color != color && piece.type == type) {
@@ -112,13 +117,10 @@ public class King extends Piece {
                 mask[y][x] = true;
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        if (!isOpponentPiece(x, y) && !isTileFree(x, y)) applyMask(mask, chess.getPieceAt(x, y));
+                        if (!piece.isOpponentPiece(x, y) && !piece.isTileFree(x, y)) applyMask(mask, chess.getPieceAt(x, y));
                     }
                 }
             }
         }
-    }
-
-    private void truncate(boolean[][] mask) {
     }
 }

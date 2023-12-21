@@ -5,8 +5,8 @@ import Game.Pieces.*;
 
 
 public class Chess {
-    King whiteKing;
-    King blackKing;
+    Piece whiteKing;
+    Piece blackKing;
 
     public Piece lastMovedPiece = null;
 
@@ -45,7 +45,7 @@ public class Chess {
 
 
     public void evaluateMoves() {
-        King king = turn == Color.WHITE ? whiteKing : blackKing;
+        Piece king = turn == Color.WHITE ? whiteKing : blackKing;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board[i][j] != null) {
@@ -76,13 +76,13 @@ public class Chess {
     private Piece evaluatePiece(String pieceCode, int x, int y) {
         Color color = pieceCode.charAt(0) == 'w' ? Color.WHITE : Color.BLACK;
         return switch (pieceCode.charAt(1)) {
-            case 'P' -> new Pawn(color, this, x, y);
-            case 'R' -> new Rook(color, this, x, y);
-            case 'N' -> new Knight(color, this, x, y);
-            case 'B' -> new Bishop(color, this, x, y);
-            case 'Q' -> new Queen(color, this, x, y);
+            case 'P' -> Piece.createPawn(this, x, y, color);
+            case 'R' -> Piece.createRook(this, x, y, color);
+            case 'N' -> Piece.createKnight(this, x, y, color);
+            case 'B' -> Piece.createBishop(this, x, y, color);
+            case 'Q' -> Piece.createQueen(this, x, y, color);
             case 'K' -> {
-                King king = new King(color, this, x, y);
+                Piece king = Piece.createKing(this, x, y, color);
                 if (color == Color.WHITE) whiteKing = king;
                 else blackKing = king;
                 yield king;
@@ -139,7 +139,7 @@ public class Chess {
     }
 
     public String move(String move) {
-        if(end) {
+        if (end) {
             return cause;
         }
         if (move.length() < 4) return "INVALID MOVE";
@@ -154,7 +154,6 @@ public class Chess {
 //            }
 //            System.out.println();
 //        }
-
 
 
         Piece piece = getPieceAt(x1, y1);
@@ -172,10 +171,10 @@ public class Chess {
             if (enPassant != null)
                 if (enPassant.type == Type.PAWN && x2 == x1 + 1 && enPassant == lastMovedPiece)
                     board[y1][x1 + 1] = null;
-            if(y1 == 6 && piece.color == Color.WHITE || y1 == 1 && piece.color == Color.BLACK) {
+            if (y1 == 6 && piece.color == Color.WHITE || y1 == 1 && piece.color == Color.BLACK) {
                 char type = move.charAt(6);
                 String color = piece.color == Color.WHITE ? "w" : "b";
-                if(type == 'Q' || type == 'N' || type == 'B' ||  type == 'R') {
+                if (type == 'Q' || type == 'N' || type == 'B' || type == 'R') {
                     System.out.println("PT");
                     Piece newPiece = evaluatePiece(color + type, x1, y1);
                     newPiece.moveCount = piece.moveCount;
@@ -224,9 +223,6 @@ public class Chess {
     }
 
     public String getTurn() {
-        return turn == Color.WHITE? "white" : "black";
+        return turn == Color.WHITE ? "white" : "black";
     }
-//    public JsonAdapter getJsonAdapter() {
-//        return new JsonAdapter(this);
-//    }
 }

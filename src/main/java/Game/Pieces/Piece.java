@@ -5,7 +5,7 @@ import Game.Chess;
 import Game.Color;
 import Game.Type;
 
-public abstract class Piece {
+public class Piece {
     public Type type;
     public Color color;
 
@@ -17,7 +17,11 @@ public abstract class Piece {
     public int moveCount = 0;
     public int[][] availableMoves = new int[8][8];
 
-    abstract public void evaluateMoves();
+    protected PieceStrategy strategy;
+
+    public void evaluateMoves() {
+        strategy.evaluateMoves(this);
+    }
 
     protected void clear() {
         for (int i = 0; i < 8; i++) {
@@ -82,5 +86,31 @@ public abstract class Piece {
             case WHITE -> "white";
             case BLACK -> "black";
         };
+    }
+    private Piece(Chess chess, int x, int y, Color color, PieceStrategy strategy, Type type){
+        this.color = color;
+        this.chess = chess;
+        this.x = x;
+        this.y = y;
+        this.strategy = strategy;
+        this.type = type;
+    }
+    public static Piece createPawn(Chess chess, int x, int y, Color color) {
+        return new Piece(chess,x,y,color,new PawnStrategy(), Type.PAWN);
+    }
+    public static Piece createRook(Chess chess, int x, int y, Color color) {
+        return new Piece(chess,x,y,color,new RookStrategy(), Type.ROOK);
+    }
+    public static Piece createKnight(Chess chess, int x, int y, Color color) {
+        return new Piece(chess,x,y,color,new KnightStrategy(), Type.KNIGHT);
+    }
+    public static Piece createBishop(Chess chess, int x, int y, Color color) {
+        return new Piece(chess,x,y,color,new BishopStrategy(), Type.BISHOP);
+    }
+    public static Piece createQueen(Chess chess, int x, int y, Color color) {
+        return new Piece(chess,x,y,color,new QueenStrategy(), Type.QUEEN);
+    }
+    public static Piece createKing(Chess chess, int x, int y, Color color) {
+        return new Piece(chess,x,y,color,new KingStrategy(), Type.KING);
     }
 }
