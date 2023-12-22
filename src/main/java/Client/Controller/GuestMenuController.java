@@ -74,6 +74,7 @@ public class GuestMenuController {
         try {
             client = new Client(address,port);
             scheduler.shutdown();
+            guestListener.setEnd(true);
             listenerTask.interrupt();
             Thread clientThread = new Thread(client);
             clientThread.start();

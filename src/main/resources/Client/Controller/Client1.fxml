@@ -200,7 +200,7 @@
                </font>
             </Label>
             <Button fx:id="returnBTmenu" layoutX="219.0" layoutY="236.0" mnemonicParsing="false" onAction="#onReturnBTAction" text="Return" />
-            <Button fx:id="okBTmenu" layoutX="52.0" layoutY="236.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="OK" />
+            <Button fx:id="okBTmenu" layoutX="52.0" layoutY="236.0" mnemonicParsing="false" onAction="#onOkBT" prefHeight="26.0" prefWidth="82.0" text="OK" />
          </children>
       </AnchorPane>
       <Button fx:id="returnBT" layoutX="86.0" layoutY="60.0" mnemonicParsing="false" onAction="#onReturnBTAction" text="Return" visible="false" />

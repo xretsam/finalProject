@@ -16,6 +16,13 @@ public class HostAdvertiser implements Runnable {
     private DatagramSocket UDPSocket;
 
     private int sessionPort;
+
+    private boolean end = false;
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+
     public HostAdvertiser(int port) {
         sessionPort = port;
         broadcasts = getBroadcasts();
@@ -57,7 +64,7 @@ public class HostAdvertiser implements Runnable {
 //        }
         try {
             int c = 0;
-            while (true) {
+            while (!end) {
                 String message = sessionPort + "";
                 byte[] buffer = message.getBytes();
                 for (InetAddress broadcast : broadcasts) {

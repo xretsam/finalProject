@@ -14,19 +14,27 @@ public class GuestListener implements Runnable{
     public String getMessage(String key){
         return hosts.get(key);
     }
+
+    private boolean end = false;
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+
     @Override
     public void run() {
         final int port = 4524;
         try (DatagramSocket socket = new DatagramSocket(port)) {
             byte[] buffer = new byte[1024];
 
-            while (true) {
+            while (!end) {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
 
                 String message = new String(packet.getData(), 0, packet.getLength());
                 InetAddress senderAddress = packet.getAddress();
                 int senderPort = packet.getPort();
+                System.out.println(message);
                 if(message.equals("DISCONNECT")) {
                     hosts.remove(senderAddress.getHostAddress() + ":" + senderPort);
                     System.out.println("removed host");
@@ -38,5 +46,6 @@ public class GuestListener implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("end listening");
     }
 }

@@ -62,7 +62,7 @@ public class KingStrategy implements PieceStrategy{
                 Piece piece = chess.getPieceAt(j, y);
                 if (piece != null) {
                     if (piece.type == Type.ROOK && piece.moveCount == 0) {
-                        piece.addMove(x + 2 * dx, y);
+                        this.piece.addMove(x + 2 * dx, y);
                     }
                     break;
                 }
