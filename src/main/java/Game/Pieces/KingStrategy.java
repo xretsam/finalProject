@@ -94,7 +94,8 @@ public class KingStrategy implements PieceStrategy{
                             if (defender == null) {
                                 for (int k = 0; k < 8; k++) {
                                     for (int l = 0; l < 8; l++) {
-                                        if (!piece.isOpponentPiece(l, k) && !piece.isTileFree(l, k))
+                                        if(l == piece.x && k == piece.y) continue;
+                                        if (piece.isAllyPiece(l,k))
                                             applyMask(mask, chess.getPieceAt(l, k));
                                     }
                                 }
@@ -117,7 +118,10 @@ public class KingStrategy implements PieceStrategy{
                 mask[y][x] = true;
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        if (!piece.isOpponentPiece(x, y) && !piece.isTileFree(x, y)) applyMask(mask, chess.getPieceAt(x, y));
+                        if (this.piece.isAllyPiece(j,i)){
+                            if(j == this.piece.x && i == this.piece.y) continue;
+                            applyMask(mask, chess.getPieceAt(j, i));
+                        }
                     }
                 }
             }

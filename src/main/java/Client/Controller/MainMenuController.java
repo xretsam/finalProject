@@ -41,6 +41,7 @@ public class MainMenuController {
 
         stage.setScene(scene);
         controller.setOutput();
+        controller.setClientThread(clientThread);
 
         clientThread.start();
     }

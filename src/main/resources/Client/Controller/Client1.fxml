@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass=".light-cell" stylesheets="@../Client1.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.GameController">
+<AnchorPane prefHeight="720.0" prefWidth="960.0" styleClass="main-background" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.GameController">
    <children>
-      <Pane fx:id="boardContainer" layoutX="340.0" layoutY="60.0" prefHeight="600.0" prefWidth="600.0">
+      <Pane fx:id="boardContainer" layoutX="180.0" layoutY="60.0" prefHeight="600.0" prefWidth="600.0">
          <children>
             <GridPane fx:id="boardView1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">
                <columnConstraints>
@@ -192,17 +192,17 @@
             </GridPane>
          </children>
       </Pane>
-      <AnchorPane fx:id="endGameMenu" layoutX="477.0" layoutY="198.0" prefHeight="324.0" prefWidth="326.0" styleClass="dark-anchorPane" visible="false">
+      <AnchorPane fx:id="endGameMenu" layoutX="317.0" layoutY="198.0" prefHeight="324.0" prefWidth="326.0" styleClass="dark-anchorPane" visible="false">
          <children>
-            <Label fx:id="endCause" layoutX="82.0" layoutY="27.0" prefHeight="57.0" prefWidth="163.0" styleClass="endCause" text="Stalemate">
+            <Label fx:id="endCause" alignment="TOP_CENTER" layoutX="12.0" layoutY="30.0" prefHeight="110.0" prefWidth="303.0" styleClass="endCause" text="Stalemate">
                <font>
                   <Font name="NimbusRoman-Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="returnBTmenu" layoutX="219.0" layoutY="236.0" mnemonicParsing="false" onAction="#onReturnBTAction" text="Return" />
-            <Button fx:id="okBTmenu" layoutX="52.0" layoutY="236.0" mnemonicParsing="false" onAction="#onOkBT" prefHeight="26.0" prefWidth="82.0" text="OK" />
+            <Button fx:id="returnBTmenu" layoutX="203.0" layoutY="236.0" mnemonicParsing="false" onAction="#onReturnBTAction" prefHeight="26.0" prefWidth="75.0" styleClass="round-button" text="Return" />
+            <Button fx:id="okBTmenu" layoutX="52.0" layoutY="236.0" mnemonicParsing="false" onAction="#onOkBT" prefHeight="26.0" prefWidth="82.0" styleClass="round-button" text="OK" />
          </children>
       </AnchorPane>
-      <Button fx:id="returnBT" layoutX="86.0" layoutY="60.0" mnemonicParsing="false" onAction="#onReturnBTAction" text="Return" visible="false" />
+      <Button fx:id="returnBT" layoutX="65.0" layoutY="60.0" mnemonicParsing="false" onAction="#onReturnBTAction" styleClass="round-button" text="Return" visible="false" />
    </children>
 </AnchorPane>

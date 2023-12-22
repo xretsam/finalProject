@@ -11,11 +11,14 @@ import java.util.concurrent.TimeUnit;
 
 import Client.Network.Client;
 import Client.Network.GuestListener;
+import Client.Network.LocalClient;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
@@ -43,6 +46,20 @@ public class GuestMenuController {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    @FXML
+    private void onReturnBTAction(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LocalNetworkGame.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.setScene(scene);
+        LocalNetworkGameController controller = fxmlLoader.getController();
+        controller.setStage(stage);
+    }
     @FXML
     void initialize() throws InterruptedException {
         assert vbox != null : "fx:id=\"vbox\" was not injected: check your FXML file 'GuestMenu.fxml'.";
@@ -63,7 +80,6 @@ public class GuestMenuController {
         };
         scheduler.scheduleAtFixedRate(uiUpdateTask,0,1,TimeUnit.SECONDS);
     }
-
 
     private void onChoice(ActionEvent actionEvent){
         Button chosenButton = (Button) actionEvent.getSource();

@@ -46,6 +46,7 @@ public class Chess {
 
     public void evaluateMoves() {
         Piece king = turn == Color.WHITE ? whiteKing : blackKing;
+        System.out.println(king.getType());
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board[i][j] != null) {

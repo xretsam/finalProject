@@ -1,0 +1,30 @@
+.light-cell {
+    /*-fx-background-color: #f0d9b5; /* Light color */
+    -fx-background-color: #eeeeee;
+}
+
+.dark-cell {
+    /*-fx-background-color: #b58863; /* Dark color */
+    -fx-background-color: #454E7A; /* */
+}
+.dark-anchorPane {
+    -fx-background-color: #3f3a3a;
+
+    -fx-background-radius: 5;
+}
+.endCause {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 24pt;
+}
+
+.main-background {
+    -fx-background-color: #32333D;
+}
+.round-button {
+    -fx-background-radius: 10;
+    -fx-background-color: #505462;
+    -fx-text-fill: #dfdfff;
+}
+.listView-button {
+
+}
